@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Slides</title>
+    <link rel="stylesheet" href="./dist/css/style.min.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="container">
+        <section>
+          <h1>A <span class="underline">simple</span> &amp; <span class="underline">fast</span> implementation of a slider menu using vanilla <span class="bolded">JavaScript</span> and <span class="bolded">CSS-flexbox</span>.</h1>
+          <button type="button" name="button">PUSH EFFECT TOGGLE </button>
+          <button type="button" name="button">OVERLAP EFFECT TOGGLE</button>
+          <h3>For the HTML you can view the <a href="view-source:http://www.wikipedia.org/" target="_blank">page source</a>.</h3>
+          <h3>The CSS</h3>
+          <div class="css_flex">
+            <p>For the CSS, I did a modular style SCSS (Sass), with the imports and general styling in the main style.scss file, and the other components styled separetely in partials. The <strong>_animate.scss</strong> file belongs to the Animate CSS library and the <strong>_prism.scss</strong> file belongs to the prism.js library. Also the <strong>_font-awesome.scss</strong> is from Font Awesome Icon Library. The rest of the scss files are custom.</p>
+            <img src="/dist/images/sass_structure.png" />
+          </div>
+          <p><strong>style.scss</strong></p>
+          <pre>
+            <code class="language-css">
+@font-face {
+    font-family: lobster;
+    src: url("../fonts/lobster.otf");
+}
+
+body {
+  background: #CAE9F4;
+  overflow-y: scroll;
+}
+
+@import "prism";
+@import "font-awesome";
+@import "animate";
+@import "menu";
+@import "main";
+@import "push-slide";
+@import "overlay-slide";
+
+            </code>
+          </pre>
+<br>
+<p><strong>_main.scss</strong></p>
+<pre>
+  <code class="language-css">
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 55%;
+  p {
+    font-size: 16px;
+    float:left;
+    color:#26698D;
+    font-family: sans-serif;
+    line-height: 1.5em;
+    img {
+      float:right;
+      width:150px;
+      padding: 3em;
+      padding-top: 0em;
+    }
+  }
+  h1 {
+    font-family: lobster;
+    color:#399ACD;
+    width: 100%;
+    max-width: 500px;
+    margin:auto;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: 36px;
+    font-family: sans-serif;
+    font-weight: 200;
+    line-height: 1.5em;
+    letter-spacing: -2px;
+    span.underline {
+      text-decoration: underline;
+    }
+    span.bolded {
+      font-size:36px;
+      text-shadow: none;
+      padding:5px;
+      text-shadow: 1px 1px 2px #18435A;
+      padding-left:10px;
+      padding-right:10px;
+      background: #26698D;
+      color:#1EB5F2;
+      font-family: sans-serif;
+      letter-spacing: -2px;
+      font-weight: bold;
+    }
+  }
+  h3 {
+    color: #26698D;
+    font-family: sans-serif;
+    font-size: 24px;
+    border-bottom: 1px solid #B6CED9;
+    margin-top: 3em;
+    padding-bottom: 0.37em;
+    a {
+      color:#1EB5F2;
+    }
+  }
+  button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    width: 300px;
+    font-size: 18px;
+    max-width: 300px;
+    border: none;
+    border: 3px dotted #399ACD;
+    background: transparent;
+    padding: 25px;
+    box-shadow: none;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #399ACD;
+    border-radius: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    cursor: hand;
+    transition-duration: 0.2s;
+    outline: 0;
+    min-width: 100%;
+    //box-shadow: 1px 1px 1px #26698D;
+
+    &:hover {
+      background: #26698D;
+      transform: scale(1.1, 1.1);
+      transition-duration: 0.2s;
+      outline: 0;
+      color:rgb(30, 181, 242);
+      border: none;
+    }
+    &:active {
+      background: #1FB8F5;
+      color:white;
+      transform: translateY(4px);
+      box-shadow: 0px 0px 0px #26698D;
+    }
+  }
+}
+
+code {
+  width: auto;
+}
+
+@media screen and(max-width:700px){
+  section {
+    max-width: 100%;
+    transition: all 1s ease;
+  }
+}
+
+@media screen and(max-width:750px) {
+  section h1 {
+    font-size: 24px;
+    width: 100%;
+    min-width: 100%;
+    span.bolded {
+      font-size: 24px;
+    }
+  }
+}
+</code>
+</pre>
+<br />
+  <p><strong>_menu.scss</strong></p>
+  <pre>
+    <code class="language-css">
+nav {
+  position: absolute;
+  width: 0px;
+  background: #26698D;
+  top:0px;
+  left:0px;
+  overflow: hidden;
+  text-align: center;
+  padding-top: 60px;
+  height: 100%;
+
+  .fa-times {
+    position: absolute;
+    top:0;
+    right:0;
+    display: block;
+    color:white;
+    padding: 15px;
+    font-size: 24px;
+    &:hover {
+      @extend .animated;
+      @extend .rubberBand;
+      cursor: pointer;
+      cursor: hand;
+    }
+  }
+  h1 {
+    color:white;
+    text-shadow: 1px 1px black;
+    font-family: lobster;
+    font-size: 60px;
+    transform: rotate(-5deg);
+  }
+  ul {
+    list-style: none;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    li {
+      padding: 10px 15px 10px 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      &:hover {
+        color:white;
+        padding: 10px;
+        background: #1EB5F2;
+        transition-duration: 0.2s;
+        transform: scale(1.3, 1.3);
+        cursor: pointer;
+        cursor: hand;
+      }
+      a {
+        color:white;
+        text-decoration: none;
+        font-family: sans-serif;
+        font-size: 18px;
+
+
+      }
+    }
+  }
+}
+</code>
+  </pre>
+<br />
+  <p><strong>_overlay-slide.scss</strong></p>
+  <pre>
+    <code class="language-css">
+.opened-overlay {
+  nav {
+    width: 250px;
+    left:0px;
+    transition: all 0.4s ease;
+    overflow: auto;
+    opacity: 1;
+    overflow: hidden;
+    @extend .animated;
+    @extend .bounceInLeft;
+    }
+}
+
+.closed-overlay {
+  nav {
+    width: 0px;
+    left:-250px;
+    transition: all 0.4s ease;
+    overflow: auto;
+    opacity: 0;
+    @extend .animated;
+    @extend .bounceOutLeft;
+    }
+}
+</code>
+  </pre>
+<br />
+  <p><strong>_push-slides.scss</strong></p>
+  <pre>
+    <code class="language-css">
+
+.opened-push {
+  section {
+    width:70%;
+  }
+  nav {
+    width: 250px;
+    left:0px;
+    transition: all 0.3s ease;
+    overflow: auto;
+    overflow: hidden;
+    @extend .animated;
+    @extend .bounceInLeft;
+    }
+  #container {
+    margin-left: 250px;
+    transition: all 1s ease;
+  }
+}
+
+.closed-push {
+  nav {
+    width: 0px;
+    left:-250px;
+    transition: all 0.7s ease;
+    overflow: auto;
+    @extend .animated;
+    @extend .bounceOutLeft;
+    }
+  #container {
+    margin-left: 0px;
+    transition: all 0.5s ease;
+  }
+}
+
+@media screen and(max-width:750px) {
+  .opened-push {
+    nav {
+      width: 100%;
+      height: 100%;
+      top:0px;
+      left:0px;
+      transition: all 0.3s ease;
+      overflow: auto;
+      overflow: hidden;
+
+      }
+    #container {
+      margin-top: 400px;
+      margin-left: 0px;
+      transition: all 1s ease;
+    }
+  }
+
+  .closed-push {
+    nav {
+      width: 100%;
+      top:-403px;
+      transition: all 0.7s ease;
+      overflow: auto;
+      left:0px;
+      }
+    #container {
+      margin-top: 0px;
+      margin-left: 0px;
+      transition: all 0.5s ease;
+    }
+  }
+}</code>
+  </pre>
+<br>
+          <h3>The JavaScript</h3>
+          <pre>
+            <code class="language-javascript">
+document.addEventListener("DOMContentLoaded", function(event) {
+
+  var firstButton = document.querySelector("#container button:nth-of-type(1)");
+  var secondButton = document.querySelector("#container button:nth-of-type(2)");
+  var wrapper = document.querySelector("#wrapper");
+  var navEx = document.querySelector("nav i");
+
+  function slidePush () {
+    wrapper.className = "closed-push";
+      firstButton.addEventListener("click", function(){
+        if (wrapper.className === "opened-push") {
+          wrapper.className = "closed-push";
+
+        } else {
+          wrapper.className = "opened-push";
+
+        }
+      });
+  }
+
+  function slideOverlay() {
+    wrapper.className = "closed-overlay";
+      secondButton.addEventListener("click", function(){
+        if (wrapper.className === "opened-overlay") {
+          wrapper.className = "closed-overlay";
+
+        } else {
+          wrapper.className = "opened-overlay";
+
+        }
+      });
+  }
+
+  function navClose() {
+    navEx.addEventListener("click", function(){
+      wrapper.className = "closed-push";
+    });
+  }
+
+  function autoHeight() {
+    var body = document.body;
+    var scrollHeight = body.scrollHeight;
+    var nav = document.querySelector("nav");
+    window.addEventListener("scroll", function(){
+      nav.style.height = scrollHeight + "px";
+  });
+}
+
+  navClose();
+  slidePush();
+  slideOverlay();
+  autoHeight();
+
+});</code>
+          </pre>
+        </section>
+      </div>
+
+
+
+
+
+      <nav>
+        <i class="fa fa-times" aria-hidden="true"></i>
+        <h1>Smooth Menu</h1>
+        <ul>
+          <li>
+            <a href="#">Menu Item1</a>
+          </li>
+          <li>
+            <a href="#">Menu Item2</a>
+          </li>
+          <li>
+            <a href="#">Menu Item3</a>
+          </li>
+          <li>
+            <a href="#">Menu Item4</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  <script type="text/javascript" src="./dist/js/app.min.js" charset="utf-8"></script>
+  </body>
+</html>

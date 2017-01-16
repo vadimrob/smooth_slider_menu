@@ -1,0 +1,17 @@
+@font-face {
+    font-family: lobster;
+    src: url("../fonts/lobster.otf");
+}
+
+body {
+  background: #CAE9F4;
+  overflow-y: scroll;
+}
+
+@import "prism";
+@import "font-awesome";
+@import "animate";
+@import "menu";
+@import "main";
+@import "push-slide";
+@import "overlay-slide";

@@ -1,0 +1,138 @@
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 55%;
+  .css_flex {
+    display: flex;
+      p {
+        font-size: 16px;
+        padding: 1.5em;
+        padding-left: 0px;
+        color:#26698D;
+        font-family: sans-serif;
+        line-height: 1.5em;
+      }
+      img {
+        vertical-align: middle;
+        max-width: 300px;
+        max-height: 250px;
+        padding: 1.5em;
+        padding-top: 0px;
+      }
+  }
+  p {
+    font-size: 16px;
+    color:#26698D;
+    font-family: sans-serif;
+  }
+  h1 {
+    font-family: lobster;
+    color:#399ACD;
+    width: 100%;
+    max-width: 500px;
+    margin:auto;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: 36px;
+    font-family: sans-serif;
+    font-weight: 200;
+    line-height: 1.5em;
+    letter-spacing: -2px;
+    span.underline {
+      text-decoration: underline;
+    }
+    span.bolded {
+      font-size:36px;
+      text-shadow: none;
+      padding:5px;
+      text-shadow: 1px 1px 2px #18435A;
+      padding-left:10px;
+      padding-right:10px;
+      background: #26698D;
+      color:#1EB5F2;
+      font-family: sans-serif;
+      letter-spacing: -2px;
+      font-weight: bold;
+    }
+  }
+  h3 {
+    color: #26698D;
+    font-family: sans-serif;
+    font-size: 24px;
+    border-bottom: 1px solid #B6CED9;
+    margin-top: 3em;
+    padding-bottom: 0.37em;
+    a {
+      color:#1EB5F2;
+    }
+  }
+  button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    width: 300px;
+    font-size: 18px;
+    max-width: 300px;
+    border: none;
+    border: 3px dotted #399ACD;
+    background: transparent;
+    padding: 25px;
+    box-shadow: none;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #399ACD;
+    border-radius: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    cursor: hand;
+    transition-duration: 0.2s;
+    outline: 0;
+    min-width: 100%;
+    //box-shadow: 1px 1px 1px #26698D;
+
+    &:hover {
+      background: #26698D;
+      transform: scale(1.1, 1.1);
+      transition-duration: 0.2s;
+      outline: 0;
+      color:rgb(30, 181, 242);
+      border: none;
+    }
+    &:active {
+      background: #1FB8F5;
+      color:white;
+      transform: translateY(4px);
+      box-shadow: 0px 0px 0px #26698D;
+    }
+  }
+}
+
+code {
+  width: auto;
+}
+
+@media screen and(max-width:700px){
+  section {
+    max-width: 100%;
+    transition: all 1s ease;
+  }
+}
+
+@media screen and(max-width:750px) {
+  section h1 {
+    font-size: 24px;
+    width: 100%;
+    min-width: 100%;
+    span.bolded {
+      font-size: 24px;
+    }
+  }
+}

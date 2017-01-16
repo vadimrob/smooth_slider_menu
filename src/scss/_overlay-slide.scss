@@ -1,0 +1,24 @@
+.opened-overlay {
+  nav {
+    width: 250px;
+    left:0px;
+    transition: all 0.4s ease;
+    overflow: auto;
+    opacity: 1;
+    overflow: hidden;
+    @extend .animated;
+    @extend .bounceInLeft;
+    }
+}
+
+.closed-overlay {
+  nav {
+    width: 0px;
+    left:-250px;
+    transition: all 0.4s ease;
+    overflow: auto;
+    opacity: 0;
+    @extend .animated;
+    @extend .bounceOutLeft;
+    }
+}
